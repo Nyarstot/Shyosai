@@ -1,0 +1,27 @@
+Commit Title
+
+FIXED
+
+    >> Description of the solved problem
+        -> Current state of the problem *optional*
+
+    >> MakeSpecularFromDiffuse() method always save specular .dds file
+        -> MakeSpecularFromDiffuse() method rewrite argument path
+
+REMOVED
+    
+    >> Description of the removed object
+        -> The reason for deleting the item or current state *optional*
+
+    >> Duplicated #pragma once directive in MaterialHandler.h
+
+ADDED
+
+    >> Description of the added object
+        -> The reason or any description *optional*
+
+    >> ClearTextStream() method
+
+NOTE
+
+    *Any notes here*
