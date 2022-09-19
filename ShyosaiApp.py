@@ -20,6 +20,7 @@ from PyQt5.QtWidgets import QTabWidget
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QHBoxLayout
 
+from Shyosai.ShyosaiWidgets import QCodeArea
 from Shyosai.ShyosaiWidgets import QLineNumberWidget
 
 
@@ -36,22 +37,13 @@ class ShyosaiWorkingAreaWidget(QWidget):
         commit_tree_tab = tab_widget.addTab(QWidget(), 'Commit Tree')
         git_tab = tab_widget.addTab(QWidget(), 'Git')
 
-        self.__text_area = QTextEdit()
-        self.__line_number = QLineNumberWidget(self.__text_area)
-        self.__text_area.textChanged.connect(self.__text_area_text_changed)
+        code_area = QCodeArea()
 
         working_layout.addWidget(tab_widget)
-        working_layout.addWidget(self.__line_number)
-        working_layout.addWidget(self.__text_area)
+        working_layout.addWidget(code_area)
         
         base_layout.addLayout(working_layout)
-        base_layout.addWidget(self.__text_area)
         self.setLayout(base_layout)
-
-    def __text_area_text_changed(self):
-        if self.__line_number:
-            n = int(self.__text_area.document().lineCount())
-            self.__line_number.changeLineCount(n)
 
 
 class ShyosaiGUI(QMainWindow):

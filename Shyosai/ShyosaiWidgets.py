@@ -2,13 +2,44 @@ from PyQt5.QtCore import Qt
 
 from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QTextCursor
+
+from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QTextEdit
+from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtWidgets import QTextBrowser
+
+
+class QCodeArea(QWidget):
+
+    def __init__(self, parent=None)-> None:
+        super(QCodeArea, self).__init__()
+        __layout = QHBoxLayout()
+
+        self.__text_area = QTextEdit()
+        self.__number_line = QLineNumberWidget(self.__text_area)
+        self.__text_area.textChanged.connect(self.__text_changed)
+
+        __layout.addWidget(self.__number_line)
+        __layout.addWidget(self.__text_area)
+
+        self.setLayout(__layout)
+
+    # Private
+
+    def __text_changed(self):
+        if self.__number_line:
+            n = int(self.__text_area.document().lineCount())
+            self.__number_line.changeLineCount(n)
+
+    # Public
+
+    def document(self):
+        return self.__text_area.document()
 
 
 class QLineNumberWidget(QTextBrowser):
     def __init__(self, parent=None)-> None:
         super(QLineNumberWidget, self).__init__()
-        super().__init__()
 
         self.__line_count = parent.document().lineCount()
         self.__size = int(parent.font().pointSizeF())
