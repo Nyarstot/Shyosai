@@ -11,14 +11,16 @@ from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QPainter
 from PyQt5.QtGui import QTextFormat
 
-from PyQt5.QtWidgets import QMenuBar
-from PyQt5.QtWidgets import QMainWindow
-from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QMenuBar
 from PyQt5.QtWidgets import QTextEdit
+from PyQt5.QtWidgets import QSplitter
 from PyQt5.QtWidgets import QTabWidget
+from PyQt5.QtWidgets import QDockWidget
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QHBoxLayout
+from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QApplication
 
 from Shyosai.ShyosaiWidgets import QCodeArea
 from Shyosai.ShyosaiWidgets import QLineNumberWidget
@@ -38,9 +40,11 @@ class ShyosaiWorkingAreaWidget(QWidget):
         git_tab = tab_widget.addTab(QWidget(), 'Git')
 
         code_area = QCodeArea()
+        splitter = QSplitter()
 
-        working_layout.addWidget(tab_widget)
-        working_layout.addWidget(code_area)
+        splitter.addWidget(tab_widget)
+        splitter.addWidget(code_area)
+        working_layout.addWidget(splitter)
         
         base_layout.addLayout(working_layout)
         self.setLayout(base_layout)
@@ -53,7 +57,10 @@ class ShyosaiGUI(QMainWindow):
         self.setWindowTitle('Shyosai')
 
         self.__initialize_menu_bar()
+        self.__initialize_dock_widgets()
+
         working_area = ShyosaiWorkingAreaWidget()
+
         self.setCentralWidget(working_area)
         self.showMaximized()
 
@@ -79,6 +86,17 @@ class ShyosaiGUI(QMainWindow):
         git_menu = menu_bar.addMenu('Git')
 
         self.setMenuBar(menu_bar)
+
+    def __initialize_dock_widgets(self):
+        console_dock = QDockWidget('Console log')
+        git_tree_dock = QDockWidget('Git Tree')
+
+        bottom_dock_layout = QVBoxLayout()
+        console_area = QTextEdit()
+
+        console_dock.setWidget(console_area)
+        self.addDockWidget(Qt.RightDockWidgetArea, console_dock)
+        self.addDockWidget(Qt.BottomDockWidgetArea, git_tree_dock)
 
     # Public
 

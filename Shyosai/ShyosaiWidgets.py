@@ -2,10 +2,12 @@ from PyQt5.QtCore import Qt
 
 from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QTextCursor
+from PyQt5.QtGui import QFontMetricsF
 
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QTextEdit
 from PyQt5.QtWidgets import QHBoxLayout
+from PyQt5.QtWidgets import QDockWidget
 from PyQt5.QtWidgets import QTextBrowser
 
 
@@ -19,12 +21,20 @@ class QCodeArea(QWidget):
         self.__number_line = QLineNumberWidget(self.__text_area)
         self.__text_area.textChanged.connect(self.__text_changed)
 
+        self.__calculate_tab_distance()
+
         __layout.addWidget(self.__number_line)
         __layout.addWidget(self.__text_area)
 
         self.setLayout(__layout)
 
     # Private
+
+    def __calculate_tab_distance(self):
+        font = self.__text_area.font()
+        font_metric = QFontMetricsF(font)
+        space_width = font_metric.width(' ')
+        self.__text_area.setTabStopDistance(space_width*4)
 
     def __text_changed(self):
         if self.__number_line:
@@ -97,3 +107,14 @@ class QLineNumberWidget(QTextBrowser):
     def setFontSize(self, size:float):
         self.__size = int(size)
         self.__styleInit()
+
+
+class ShyosaiDockWidget(QDockWidget):
+
+    def __init__(self, parent=None)-> None:
+        super(ShyosaiDockWidget, self).__init__(parent)
+
+    
+
+class QConsoleLog(QTextEdit):
+    pass
