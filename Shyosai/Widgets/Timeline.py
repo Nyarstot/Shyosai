@@ -44,22 +44,24 @@ class Timeline(QTableWidget):
         self.setHorizontalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel)
         self.setShowGrid(False)
 
-        self.__draw_timeline()
+        self.__drawTimeline()
 
-    def __draw_timeline(self):
+    # Private
+
+    def __drawTimeline(self):
         date_handler = ShyosaiDateTime()
-        current_year = date_handler.current_year()
+        current_year = date_handler.currentYear()
 
         self.setRowCount(1)
         self.setColumnCount(13)
 
         for i in range(0, self.columnCount()):
             month_num = ((i + 1) % 12) if ((i + 1) % 12 != 0) else 12
-            month_name = date_handler.get_month_name(month_num)
+            month_name = date_handler.getMonthName(month_num)
             month_timeline = MonthItemWidget(current_year, month_num, self.__m_sBranches, a_stParent=self)
 
             self.setHorizontalHeaderItem(i, QTableWidgetItem(month_name))
-            self.setColumnWidth(i, month_timeline.total_column_width())
+            self.setColumnWidth(i, month_timeline.totalColumnWidth())
             self.setCellWidget(0, i, month_timeline)
 
 
@@ -70,20 +72,25 @@ class MonthItemWidget(QTableWidget):
         self.__m_stDateHandler = ShyosaiDateTime()
         self.m_nYear = a_nYear
         self.m_nMonthNumber = a_nMonthNumber
-        self.m_sMontName = self.__m_stDateHandler.get_month_name(a_nMonthNumber)
-        self.m_nDayCount = self.__m_stDateHandler.days_in_month(a_nYear, a_nMonthNumber)
+        self.m_sMontName = self.__m_stDateHandler.getMonthName(a_nMonthNumber)
+        self.m_nDayCount = self.__m_stDateHandler.daysInMonth(a_nYear, a_nMonthNumber)
         self.m_sBranches = a_sBranches
+        self.m_stParent = a_stParent
 
         self.horizontalHeader().setDefaultSectionSize(1)
         self.verticalHeader().setVisible(False)
 
-        self.__draw_timeline()
+        self.__drawTimeline()
 
-    def __draw_timeline(self):
+    # Private
+
+    def __drawTimeline(self):
         self.setRowCount(len(self.m_sBranches))
         self.setColumnCount(self.m_nDayCount)
 
-    def total_column_width(self):
+    # Public
+
+    def totalColumnWidth(self):
         total_width = 2
         for i in range(self.columnCount()):
             total_width += self.columnWidth(i)
@@ -103,9 +110,11 @@ class RepoInfoItemWidget(QTableWidget):
         self.horizontalHeader().setStretchLastSection(True)
         self.setHorizontalHeaderItem(0, QTableWidgetItem(self.__m_sRepoName))
 
-        self.__init_ui()
+        self.__initUi()
 
-    def __init_ui(self):
+    # Private
+
+    def __initUi(self):
         self.setRowCount(len(self.__m_sBranches))
 
         for i in range(self.rowCount()):
