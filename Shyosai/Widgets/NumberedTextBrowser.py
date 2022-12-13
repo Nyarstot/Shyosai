@@ -17,6 +17,7 @@ class NumberedTextBrowserWidget(QWidget):
         self.__m_stTextArea = QTextEdit()
         self.__m_stNumberLine = NumberLine(self.__m_stTextArea)
 
+        self.__calcTabDistance()
         self.__m_stTextArea.textChanged.connect(self.__textChanged)
 
         self.__m_lytWidgetLayout.addWidget(self.__m_stNumberLine)
@@ -73,9 +74,9 @@ class NumberLine(QTextBrowser):
         self.__m_Style = 'background: transparent;\
                           border: none;\
                           color: #AAA;\
-                          font: {self.__m_nFontSize}pt;'
+                          font: {self.__m_nFontSize}px;'
         self.setStyleSheet(self.__m_Style)
-        self.setFixedWidth(self.__m_nFontSize*5)
+        self.setFixedWidth(self.__m_nFontSize*4)
 
     # Public
 

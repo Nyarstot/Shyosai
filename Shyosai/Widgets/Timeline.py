@@ -14,7 +14,7 @@ from Shyosai.Utils.ShyosaiDateTime import ShyosaiDateTime
 
 class GitGraphWidget(QTableWidget):
 
-    def __init__(self, a_sBranches:list=[], a_stParent=None)->None:
+    def __init__(self,a_sRepoName:str, a_sBranches:list=[], a_stParent=None)->None:
         super(GitGraphWidget, self).__init__(a_stParent)
         self.__m_sBranches = a_sBranches
 
@@ -26,10 +26,17 @@ class GitGraphWidget(QTableWidget):
         self.verticalHeader().setDefaultSectionSize(500)
 
         self.__m_stTimeline = Timeline(self.__m_sBranches)
-        self.__m_stRepoInfo = RepoInfoItemWidget(a_sBranches=self.__m_sBranches)
+        self.__m_stRepoInfo = RepoInfoItemWidget(a_sRepoName, a_sBranches=self.__m_sBranches)
+
+        self.setMaximumHeight(self.__m_stTimeline.height())
 
         self.setCellWidget(0, 0, self.__m_stRepoInfo)
         self.setCellWidget(0, 1, self.__m_stTimeline)
+
+    # Public
+
+    def setRepoName(self, a_sRepoName:str):
+        self.__m_stRepoInfo.setRepoName(a_sRepoName)
 
 
 class Timeline(QTableWidget):
@@ -108,7 +115,6 @@ class RepoInfoItemWidget(QTableWidget):
         self.verticalHeader().setVisible(False)
         self.horizontalHeader().setFixedHeight(47)
         self.horizontalHeader().setStretchLastSection(True)
-        self.setHorizontalHeaderItem(0, QTableWidgetItem(self.__m_sRepoName))
 
         self.__initUi()
 
@@ -121,6 +127,14 @@ class RepoInfoItemWidget(QTableWidget):
             item = QTableWidgetItem(self.__m_sBranches[i])
             item.setTextAlignment(Qt.AlignHCenter|Qt.AlignVCenter)
             self.setItem(i, 0, item)
+
+        self.setRepoName(self.__m_sRepoName)
+
+    # Public
+
+    def setRepoName(self, a_sRepoName:str):
+        self.__m_sRepoName = a_sRepoName
+        self.setHorizontalHeaderItem(0, QTableWidgetItem(self.__m_sRepoName))
 
 
 if __name__ == "__main__":
