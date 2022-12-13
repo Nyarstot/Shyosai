@@ -30,12 +30,20 @@ class ShyosaiMainUIWidget(QWidget):
 
         textBrowser = NumberedTextBrowserWidget()
         commitBrowser = NumberedTextBrowserWidget()
-        splitter = QSplitter()
+        browserSplitter = QSplitter()
 
-        splitter.addWidget(textBrowser)
-        splitter.addWidget(commitBrowser)
+        toolShelf = QTabWidget()
+        explorerTab = toolShelf.addTab(QWidget(), 'Dirview')
+        gitTab = toolShelf.addTab(QWidget(), 'Git')
+        shelfSplitter = QSplitter()
 
-        self.__m_lytWorkingLayout.addWidget(splitter)
+        shelfSplitter.addWidget(toolShelf)
+        shelfSplitter.addWidget(browserSplitter)
+        browserSplitter.addWidget(textBrowser)
+        browserSplitter.addWidget(commitBrowser)
+
+        self.__m_lytWorkingLayout.addWidget(shelfSplitter)
+        # self.__m_lytWorkingLayout.addWidget(browserSplitter)
         self.__m_lytBaseLayout.addLayout(self.__m_lytWorkingLayout)
         self.setLayout(self.__m_lytBaseLayout)
 
@@ -72,7 +80,7 @@ class ShyosaiMainWindow(QMainWindow):
 
     def __initializeDockWidgets(self):
         consoleDock = ShyosaiDockWidget('Console Log')
-        repoGraphDock = ShyosaiDockWidget('Tree View')
+        repoGraphDock = ShyosaiDockWidget('Graph View')
 
         graphView = GitGraphWidget('Shyosai', ['master', 'dev'])
         consoleLog = Console()
