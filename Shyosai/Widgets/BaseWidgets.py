@@ -12,5 +12,5 @@ class ShyosaiDockWidget(QDockWidget):
     # Private
 
     def __styleInitialize(self):
-        self.__m_sStyle = 'color: red;'
+        self.__m_sStyle = ''
         self.setStyleSheet(self.__m_sStyle)

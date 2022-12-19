@@ -18,10 +18,15 @@ class DirviewWidget(QTreeView):
         super(DirviewWidget, self).__init__(parent=a_stParent)
         self.items = []
 
-        for i in 'abc':
-            self.items.append(ShyosaiGitDirviewNode(i))
-            self.items[-1].addChild(ShyosaiGitDirviewNode(['g', 'e', 'f']))
-            self.items[-1].addChild(ShyosaiGitDirviewNode(['d', 'c', 'z']))
+        # for i in 'abc':
+        #     self.items.append(ShyosaiGitDirviewNode(i))
+        #     self.items[-1].addChild(ShyosaiGitDirviewNode(['g', 'e', 'f']))
+        #     self.items[-1].addChild(ShyosaiGitDirviewNode(['d', 'c', 'z']))
+        self.items.append(ShyosaiGitDirviewNode('a'))
+        self.items[-1].addChild(ShyosaiGitDirviewNode(['b', 'b1']))
+        ch = self.items[-1].child(0)
+        ch.addChild(ShyosaiGitDirviewNode(['c', 'c1']))
+
 
         self.tw = QTreeView()
         self.tw.setModel(ShyosaiDirviewItemModel(self.items))
