@@ -115,6 +115,7 @@ class GitCommitWidget(QWidget):
         repo.git.execute("git add .")
         repo.git.execute("git commit -m \"{}\"".format(commit))
         repo.git.execute("git push origin main")
+        repo.git.execute("git log")
         # repo.execute("git commit -m \"{}\"".format(commit))
 
     def set_repo(self, repo):
