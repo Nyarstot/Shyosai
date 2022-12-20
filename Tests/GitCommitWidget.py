@@ -120,7 +120,6 @@ class GitCommitWidget(QWidget):
         print(log)
         log = repo.git.execute("git log")
         print(log)
-        # repo.execute("git commit -m \"{}\"".format(commit))
 
     def set_repo(self, repo):
         self.m_repo = repo
